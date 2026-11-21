@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>TypeForge – Free Typing Tutor</title>
+<meta name="description" content="A free typing tutor: course, speed ladder, special keys trainer, coder practice and daily plan.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%233157f5'/%3E%3Ctext x='16' y='23' font-size='20' font-family='Arial' font-weight='700' text-anchor='middle' fill='white'%3ET%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Manrope:wght@500;700;800&display=swap">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="wrap">
+<header class="top">
+  <div class="brand">
+    <svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3157f5"/><stop offset="1" stop-color="#7a4dff"/></linearGradient></defs><rect width="32" height="32" rx="9" fill="url(#lg)"/><rect x="6" y="7" width="20" height="18" rx="5" fill="rgba(255,255,255,.18)"/><path d="M11 12h10M16 12v9" stroke="#fff" stroke-width="2.6" stroke-linecap="round"/></svg>
+    <div><h1>TypeForge</h1><small>practice daily, type faster</small></div>
+  </div>
+  <nav class="tabs" id="tabs" aria-label="Sections">
+    <button data-t="today" class="on">Today</button><button data-t="course">Course</button><button data-t="ladder">Speed ladder</button><button data-t="sym">Special keys</button><button data-t="practice">Practice</button><button data-t="test">Speed test</button><button data-t="game">Game</button><button data-t="prog">Progress</button>
+  </nav>
+  <div class="opts">
+    <button class="ic" id="oS">Sound</button>
+    <button class="ic" id="oP" title="A ghost caret runs slightly faster than your recent average">Pace caret</button>
+    <button class="ic" id="oL" title="Switch keyboard layout: hints and key positions change">Layout: US</button>
+    <button class="ic" id="oH" title="Hide the on-screen keyboard and hints to build touch typing">Blind mode</button>
+    <button class="ic" id="oB" title="Backspace disabled: build accuracy habit">No backspace</button>
+    <button class="ic" id="oK" title="A wrong key does not move forward">Strict mode</button>
+    <button class="ic" id="th">Theme</button>
+  </div>
+</header>
+<p class="hint" id="lay" style="display:none"></p>
+
+<div class="grid" id="grid">
+  <aside class="side" id="side"></aside>
+  <section class="main">
+
+    <!-- typing area: course, ladder, practice, speed test -->
+    <div class="sec show" id="sT">
+      <div class="stats">
+        <div><b id="sw">0</b><span>WPM</span></div>
+        <div><b id="sa">100%</b><span>Accuracy</span></div>
+        <div><b id="st">0:00</b><span id="stl">Time</span></div>
+      </div>
+      <div class="cust" id="cust">
+        <textarea id="ct" rows="3" placeholder="Paste any text or code (newlines and indentation are kept, 900 characters max)."></textarea>
+        <button class="go" id="cg">Start with this text</button>
+      </div>
+      <div id="box" tabindex="0" aria-label="Typing area"></div>
+      <p class="hint" id="hint"></p>
+      <div class="kb" id="kb"></div>
+      <div class="kb" id="np" style="display:none;margin-top:10px"></div>
+      <div class="res" id="res"></div>
+    </div>
+
+    <!-- falling words game -->
+    <div class="sec" id="sG">
+      <div class="stats">
+        <div><b id="gs">0</b><span>Score</span></div>
+        <div><b id="gv">1</b><span>Level</span></div>
+        <div><b id="gl">5</b><span>Lives</span></div>
+        <div><b id="gb">&nbsp;</b><span>Typing</span></div>
+      </div>
+      <div id="stage"><button class="go ov" id="gst" style="margin:0;width:150px;height:44px;inset:auto;left:calc(50% - 75px);top:148px">Start game</button></div>
+      <p class="hint">Words fall from the top. Type a word to clear it before it reaches the bottom. Esc restarts.</p>
+      <div class="res" id="gres"></div>
+    </div>
+
+    <!-- progress & daily plan (filled by JS) -->
+    <div class="sec" id="sP"></div>
+    <div class="sec" id="sD"></div>
+
+    <!-- special keys trainer -->
+    <div class="sec" id="sS">
+      <div class="stats">
+        <div><b id="ss1">0/20</b><span>Round</span></div>
+        <div><b id="ss2">0%</b><span>First-try accuracy</span></div>
+        <div><b id="ss3">0/32</b><span>Symbols mastered</span></div>
+      </div>
+      <div class="sq" id="sq"></div>
+      <p class="hint" id="sfb">Naam ya symbol dikhega, sahi key dabao. 2 galti pe keyboard pe jagah dikhegi. Esc dabao toh naya round.</p>
+      <div class="kb" id="kb2"></div>
+      <p><button class="ic" id="shint">Show me the key</button> <button class="ic" id="snew">New round</button></p>
+      <div class="res" id="sres"></div>
+      <h3>All special characters (tap one to see where it is)</h3>
+      <div id="schart"></div>
+    </div>
+
+  </section>
+</div>
+<footer>TypeForge &middot; progress is saved in your browser (use Backup in the Progress tab to move it)</footer>
+</div>
+
+<!-- scripts: order matters (each file only uses things defined in the files above it) -->
+<script src="js/utils.js"></script>
+<script src="js/data.js"></script>
+<script src="js/paragraphs.js"></script>
+<script src="js/state.js"></script>
+<script src="js/layout.js"></script>
+<script src="js/lessons.js"></script>
+<script src="js/engine.js"></script>
+<script src="js/symbols.js"></script>
+<script src="js/game.js"></script>
+<script src="js/progress.js"></script>
+<script src="js/today.js"></script>
+<script src="js/ui.js"></script>
+</body>
+</html>
