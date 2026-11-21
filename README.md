@@ -13,14 +13,7 @@ Free typing tutor that runs fully in the browser (no server, no build step).
 
 Just open `index.html` in a browser. (Or: `python3 -m http.server` and open http://localhost:8000)
 
-## Deploy on GitHub Pages
 
-1. Create a new **public** repository on GitHub (for example `typeforge`).
-2. Upload everything from this folder so that `index.html` is in the repository root
-   (GitHub > Add file > Upload files, drag all files and folders, Commit).
-3. Repository **Settings > Pages > Build and deployment**: Source = *Deploy from a branch*,
-   Branch = `main`, folder = `/ (root)`, Save.
-4. After a minute your site is live at `https://<your-username>.github.io/typeforge/`.
 
 Other free options: drag the folder into Netlify Drop, or import the repo in Vercel / Cloudflare Pages.
 
