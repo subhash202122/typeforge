@@ -56,7 +56,7 @@ button { cursor: pointer; }
 button:focus-visible, input:focus-visible, textarea:focus-visible, #box:focus-visible {
   outline: 2px solid var(--ac); outline-offset: 2px;
 }
-.wrap { max-width: 1120px; margin: 0 auto; padding: 18px 16px 28px; }
+.wrap { width: 100%; max-width: 1120px; min-height: 100vh; min-height: 100svh; margin: 0 auto; padding: 18px 16px 28px; display: flex; flex-direction: column; }
 
 /* ---------- header ---------- */
 .top { display: flex; align-items: center; gap: 14px 18px; flex-wrap: wrap; margin-bottom: 18px; }
@@ -94,7 +94,7 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, #box:focus-vi
 .grid.one { grid-template-columns: 1fr; }
 .grid.one .side { display: none; }
 .main, .side { background: var(--sf); border: 1px solid var(--ln); border-radius: var(--r); box-shadow: var(--shadow); }
-.main { padding: 20px; min-width: 0; }
+.main { padding: 20px; min-width: 0; container: main-panel / inline-size; }
 .side { padding: 10px; position: sticky; top: 12px; max-height: calc(100vh - 24px); overflow: auto; }
 .side::-webkit-scrollbar { width: 8px; } .side::-webkit-scrollbar-thumb { background: var(--ln); border-radius: 8px; }
 @media (max-width: 800px) {
@@ -230,7 +230,7 @@ button.sc:hover { transform: translateY(-2px); border-color: var(--ac); }
 
 /* ---------- misc ---------- */
 .sec { display: none; } .sec.show { display: block; }
-footer { text-align: center; color: var(--mu); font-size: 12.5px; margin-top: 22px; }
+footer { text-align: center; color: var(--mu); font-size: 12.5px; margin-top: auto; padding-top: 22px; }
 /* ---------- responsive layouts ---------- */
 @media (max-width: 800px) {
   .top { gap: 12px; }
@@ -274,4 +274,36 @@ footer { text-align: center; color: var(--mu); font-size: 12.5px; margin-top: 22
   .sg { grid-template-columns: 1fr; }
   .sbig { font-size: 26px; }
 }
+
+/* A split-screen window can be narrow even when the device viewport is wide. */
+@container main-panel (max-width: 560px) {
+  .hero { flex-direction: column; gap: 16px; padding: 14px; text-align: center; }
+  .chips { justify-content: center; }
+  .tk { flex-wrap: wrap; }
+  .tk > span { flex: 1 1 180px; min-width: 0; }
+  .kb, .row { gap: 4px; }
+  .k { min-width: 27px; height: 34px; font-size: 12px; }
+  .k.sp { width: 150px; }
+  .k.sh { min-width: 46px; }
+  #box { font-size: 18px; padding-inline: 10px; }
+  .stats, .pg, .sg { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .stats div, .pg div { min-width: 0; padding: 10px; overflow-wrap: anywhere; }
+  .stats b, .pg b { font-size: 24px; }
+  .res { padding: 12px; overflow-wrap: anywhere; }
+  .res .go { display: block; width: 100%; margin-right: 0; }
+}
+
+@container main-panel (max-width: 380px) {
+  .tk .go { width: 100%; }
+  .sg { grid-template-columns: 1fr; }
+  .sbig { font-size: 26px; }
+}
+
+@media (orientation: landscape) and (max-height: 500px) {
+  .wrap { padding-top: 8px; padding-bottom: 14px; }
+  .top { gap: 8px 12px; margin-bottom: 10px; }
+  #stage { height: min(260px, 45vh); }
+  footer { padding-top: 12px; }
+}
+
 @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
