@@ -146,8 +146,9 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, #box:focus-vi
 body.blind #sT .kb, body.blind #sT .hint { visibility: hidden; }
 
 /* ---------- keyboard ---------- */
-.kb { display: flex; flex-direction: column; gap: 6px; align-items: center; overflow-x: auto; padding: 4px 0 8px; }
-.row { display: flex; gap: 6px; }
+.kb { display: flex; flex-direction: column; gap: 6px; overflow-x: auto; padding: 4px 0 8px; }
+/* Auto margins center rows that fit and keep overflowing rows scrollable from the first key. */
+.row { display: flex; gap: 6px; width: max-content; margin-inline: auto; }
 .k {
   min-width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--ln);
   border-bottom-width: 4px; border-radius: 9px; font: 600 14px "JetBrains Mono", monospace; color: var(--mu);
@@ -202,7 +203,6 @@ h3 { margin: 22px 0 8px; font-size: 14px; text-transform: uppercase; letter-spac
 .tk:hover { border-color: var(--ac); transform: translateY(-1px); }
 .tk small { color: var(--mu); }
 .tk .go { margin: 0; padding: 8px 16px; }
-@media (max-width: 560px) { .hero { flex-direction: column; text-align: center; } .chips { justify-content: center; } }
 
 /* ---------- progress ---------- */
 .pg { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin-bottom: 14px; }
@@ -231,9 +231,47 @@ button.sc:hover { transform: translateY(-2px); border-color: var(--ac); }
 /* ---------- misc ---------- */
 .sec { display: none; } .sec.show { display: block; }
 footer { text-align: center; color: var(--mu); font-size: 12.5px; margin-top: 22px; }
+/* ---------- responsive layouts ---------- */
+@media (max-width: 800px) {
+  .top { gap: 12px; }
+  .tabs { width: 100%; }
+  .tabs button { flex: 1 0 auto; }
+  .main { padding: 16px; }
+}
+
 @media (max-width: 560px) {
+  .wrap { padding: 12px 12px 22px; }
   .main { padding: 14px; }
-  .k { min-width: 27px; height: 34px; font-size: 12px; } .k.sp { width: 150px; } .k.sh { min-width: 46px; }
-  #box { font-size: 18px; } .stats { gap: 8px; } .stats b { font-size: 24px; }
+  .grid { gap: 12px; }
+  .side { max-height: 200px; }
+  .tabs button, .ic, .side button, .go { min-height: 44px; }
+  .opts { gap: 8px; }
+  .ic { justify-content: center; }
+  .opts .ic { flex: 1 1 auto; }
+  .hero { flex-direction: column; gap: 16px; padding: 14px; text-align: center; }
+  .chips { justify-content: center; }
+  .tk { flex-wrap: wrap; }
+  .tk > span { flex: 1 1 180px; min-width: 0; }
+  .tk .go { flex-shrink: 0; }
+  .kb, .row { gap: 4px; }
+  .k { min-width: 27px; height: 34px; font-size: 12px; }
+  .k.sp { width: 150px; }
+  .k.sh { min-width: 46px; }
+  #box { font-size: 18px; padding-inline: 10px; }
+  .stats, .pg, .sg { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .stats div, .pg div { min-width: 0; padding: 10px; overflow-wrap: anywhere; }
+  .stats b, .pg b { font-size: 24px; }
+  .cust textarea, .in { font-size: 16px; }
+  .res { padding: 12px; overflow-wrap: anywhere; }
+  .res .go { display: block; width: 100%; margin-right: 0; }
+  footer { margin-top: 16px; }
+}
+
+@media (max-width: 380px) {
+  .wrap { padding-inline: 8px; }
+  .main { padding: 10px; }
+  .tk .go { width: 100%; }
+  .sg { grid-template-columns: 1fr; }
+  .sbig { font-size: 26px; }
 }
 @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
