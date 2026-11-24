@@ -30,7 +30,10 @@ function gLoop(t) {
       return x.length >= 3;
     }), w = rnd(p), el = document.createElement("span");
     el.textContent = w;
-    el.style.left = 4 + Math.random() * 68 + "%";
+    // Use the same fraction of the stage and the word so it still fits after a resize.
+    var x = 4 + Math.random() * 92;
+    el.style.left = x + "%";
+    el.style.translate = -x + "%";
     S.appendChild(el);
     G.w.push({ w, y: 0, el });
     G.sp = Math.max(0.7, 2.1 - G.lv * 0.12);

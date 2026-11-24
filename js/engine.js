@@ -13,6 +13,11 @@ function paceWPM() {
 function gh() {
   return store.o.p ? paceWPM() : 0;
 }
+function keepCaretVisible() {
+  var box = $("#box"), caret = box.querySelector(".cur");
+  if (caret) box.scrollTop = caret.offsetTop - (box.clientHeight - caret.offsetHeight) / 2;
+}
+new ResizeObserver(keepCaretVisible).observe($("#box"));
 function paint() {
   var h = "", gx = C && C.ghost && start ? Math.floor((Date.now() - start) / 12e3 * C.ghost) : -1;
   for (var i = 0; i < text.length; i++) {
@@ -21,11 +26,7 @@ function paint() {
   }
   var b = $("#box");
   b.innerHTML = h;
-  var cu = b.querySelector(".cur");
-  if (cu) {
-    var t = cu.offsetTop - b.offsetTop - 44;
-    b.scrollTop = t > 0 ? t : 0;
-  }
+  keepCaretVisible();
   Array.prototype.forEach.call(document.querySelectorAll("#kb .nx"), function(e2) {
     e2.classList.remove("nx");
   });
